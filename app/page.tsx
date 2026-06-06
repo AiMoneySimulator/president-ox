@@ -38,10 +38,13 @@ const INIT: Post[] = [
   { id: 10, side: 'tanhek',  nickname: '진실탐구',   score: 334, rebuttal: 45,  time: '6분 전',  text: '대장동 비리로 유죄 판결이 났습니다. 이게 연임을 지지할 수 없는 이유입니다.' },
   { id: 15, side: 'yeonnim', nickname: '민주개혁',   score: 167, rebuttal: 38,  time: '20분 전', text: '대장동 수익의 대부분은 성남시로 귀속됐습니다. 시민을 위한 개발이었습니다.' },
   { id: 16, side: 'tanhek',  nickname: '법과원칙',   score: 298, rebuttal: 55,  time: '19분 전', text: '대장동 50억 클럽, 이게 공공개발입니까? 사익 편취가 핵심입니다.' },
-  // 앱스타인
-  { id: 11, side: 'yeonnim', nickname: '좌파논객',   score: 156, rebuttal: 89,  time: '11분 전', text: '앱스타인 의혹은 검찰이 만들어낸 허위 조작 공작입니다. 증거가 없습니다.' },
-  { id: 12, side: 'tanhek',  nickname: '보수논평가', score: 289, rebuttal: 52,  time: '10분 전', text: '앱스타인 의혹만으로도 지도자의 도덕성에 심각한 문제가 있습니다.' },
-  { id: 17, side: 'yeonnim', nickname: '진보논단',   score: 134, rebuttal: 71,  time: '22분 전', text: '앱스타인 연루설은 정치공작입니다. 탄핵을 위한 허위 정보 유포입니다.' },
+  // 환율
+  { id: 11, side: 'yeonnim', nickname: '환율낙관론', score: 156, rebuttal: 89,  time: '11분 전', text: '환율 1,400원대는 미국 금리 정책의 영향입니다. 연임 정부가 안정적으로 관리하고 있습니다.' },
+  { id: 12, side: 'tanhek',  nickname: '환율위기론', score: 289, rebuttal: 52,  time: '10분 전', text: '환율 급등은 정치 불안의 직접 결과입니다. 탄핵으로 안정을 찾아야 환율도 내립니다.' },
+  { id: 17, side: 'yeonnim', nickname: '경제진보',   score: 134, rebuttal: 71,  time: '22분 전', text: '환율은 글로벌 달러 강세 때문입니다. 정권 교체가 오히려 더 큰 불안을 만듭니다.' },
+  // 선거부실
+  { id: 19, side: 'yeonnim', nickname: '선관위지지', score: 167, rebuttal: 58,  time: '23분 전', text: '선거부실 의혹은 패배를 인정 못한 음모론입니다. 선관위 독립성을 지켜야 합니다.' },
+  { id: 20, side: 'tanhek',  nickname: '선거감시단', score: 312, rebuttal: 43,  time: '21분 전', text: '선거부실 의혹을 그냥 넘기면 민주주의 근간이 흔들립니다. 철저한 재검표가 필요합니다.' },
   // 경제정책
   { id: 13, side: 'yeonnim', nickname: '경제학도',   score: 178, rebuttal: 43,  time: '18분 전', text: '경제정책의 일관성이 중요합니다. 연임으로 서민 중심 경제를 완성해야 합니다.' },
   { id: 14, side: 'tanhek',  nickname: '자유시장론', score: 245, rebuttal: 61,  time: '16분 전', text: '현 경제정책은 포퓰리즘입니다. 재정 건전성이 무너지고 있어 탄핵이 해법입니다.' },
@@ -54,12 +57,12 @@ const ISSUES: Issue[] = [
   { id: '대장동', label: '대장동', emoji: '🔥',
     yArg: '대장동은 공공개발 성공 사례이자 적폐청산의 일환이다. 민간 개발보다 훨씬 효율적이었다.',
     tArg: '대장동은 권력형 부정부패의 정점이다. 유죄 판결이 모든 걸 증명한다.' },
-  { id: '앱스타인', label: '앱스타인', emoji: '💥',
-    yArg: '앱스타인 연루설은 검찰이 만들어낸 정치공작이다. 근거 없는 마녀사냥에 불과하다.',
-    tArg: '도덕적 의혹이 해소되지 않은 인물을 국가 수반으로 인정할 수 없다. 국격의 문제다.' },
-  { id: '경제정책', label: '경제정책', emoji: '📊',
-    yArg: '서민 중심 경제정책을 완성하려면 연임이 필수다. 정책 연속성이 경제 회복의 핵심이다.',
-    tArg: '현 경제정책은 재정을 파탄낸 포퓰리즘이다. 탄핵이 경제 정상화의 첫걸음이다.' },
+  { id: '환율', label: '환율', emoji: '💱',
+    yArg: '환율 급등은 글로벌 달러 강세 탓이다. 연임 정부의 외환 대응 능력을 믿어야 한다.',
+    tArg: '1,400원대 환율은 정치 불안의 직접 결과다. 탄핵으로 정치 안정을 회복해야 내린다.' },
+  { id: '선거부실', label: '선거부실', emoji: '🗳️',
+    yArg: '선거부실 의혹은 패배를 인정 못한 세력의 음모론이다. 선관위 독립성을 훼손하지 마라.',
+    tArg: '선거 시스템 신뢰가 무너지면 민주주의가 무너진다. 철저한 재검표와 수사가 필요하다.' },
 ]
 
 const KEYWORDS: Record<Side, string[]> = {
@@ -240,7 +243,7 @@ export default function Page() {
             {/* 사진 */}
             <div style={{ padding: '16px 0 12px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div style={{
-                width: 84, height: 104, background: BG3, border: `1px solid ${BORDER}`,
+                width: 168, height: 208, background: BG3, border: `1px solid ${BORDER}`,
                 position: 'relative', overflow: 'hidden', marginBottom: 8,
                 boxShadow: `0 0 0 3px ${BG2}, 0 0 0 4px ${BORDER}`,
               }}>
