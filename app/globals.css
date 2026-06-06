@@ -32,27 +32,58 @@ textarea { font-family: inherit; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
+/* ── 기본 ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes pulseBlue {
-  0%,100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
-  50%     { box-shadow: 0 0 12px 2px rgba(59,130,246,0.25); }
-}
-@keyframes pulseRed {
-  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
-  50%     { box-shadow: 0 0 12px 2px rgba(239,68,68,0.25); }
-}
-@keyframes scoreUp {
-  0%   { transform: translateY(0);   opacity: 1; }
-  100% { transform: translateY(-14px); opacity: 0; }
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.45; }
 }
 @keyframes tickerScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-@keyframes blink {
-  0%,100% { opacity: 1; }
-  50%     { opacity: 0.5; }
+@keyframes scoreUp {
+  0%   { transform: translateY(0);    opacity: 1; }
+  100% { transform: translateY(-14px); opacity: 0; }
+}
+
+/* ── 진영 우세 글로우 (은은) ── */
+@keyframes glowBlueWin {
+  0%,100% { box-shadow: 0 0 12px #3b82f655, inset 0 0 20px #3b82f610; border-color: #3b82f655; }
+  50%     { box-shadow: 0 0 28px #3b82f699, inset 0 0 40px #3b82f620; border-color: #3b82f688; }
+}
+@keyframes glowRedWin {
+  0%,100% { box-shadow: 0 0 12px #ef444455, inset 0 0 20px #ef444410; border-color: #ef444455; }
+  50%     { box-shadow: 0 0 28px #ef444499, inset 0 0 40px #ef444420; border-color: #ef444488; }
+}
+
+/* ── 진영 열세 경고 글로우 (급박, 빠르게) ── */
+@keyframes warnBlue {
+  0%,100% { box-shadow: 0 0 6px #3b82f633; border-color: #3b82f633; }
+  50%     { box-shadow: 0 0 40px #3b82f6cc, inset 0 0 30px #3b82f622; border-color: #3b82f6aa; }
+}
+@keyframes warnRed {
+  0%,100% { box-shadow: 0 0 6px #ef444433; border-color: #ef444433; }
+  50%     { box-shadow: 0 0 40px #ef4444cc, inset 0 0 30px #ef444422; border-color: #ef4444aa; }
+}
+
+/* ── 1위 카드 빛나기 ── */
+@keyframes crownGlowBlue {
+  0%,100% { box-shadow: 0 0 8px #3b82f644, 0 4px 20px #3b82f633; }
+  50%     { box-shadow: 0 0 20px #3b82f688, 0 4px 32px #3b82f655; }
+}
+@keyframes crownGlowRed {
+  0%,100% { box-shadow: 0 0 8px #ef444444, 0 4px 20px #ef444433; }
+  50%     { box-shadow: 0 0 20px #ef444488, 0 4px 32px #ef444455; }
+}
+
+/* ── 게이지 틱 ── */
+@keyframes gaugePop {
+  0%  { transform: scaleX(1); }
+  15% { transform: scaleX(1.008); }
+  30% { transform: scaleX(0.997); }
+  100%{ transform: scaleX(1); }
 }

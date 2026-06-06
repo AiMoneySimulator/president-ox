@@ -228,6 +228,7 @@ export default function Page() {
           keywords={KEYWORDS.yeonnim}
           history={yHistory}
           stance={stance}
+          isWinning={yRaw >= 50}
           writeValue={texts.yeonnim}
           onWriteChange={v => setTexts(t => ({ ...t, yeonnim: v }))}
           onSubmit={() => submitPost('yeonnim')}
@@ -242,36 +243,117 @@ export default function Page() {
           <div style={{ flexShrink: 0, borderBottom: `1px solid ${BORDER}`, background: BG2 }}>
             {/* 사진 */}
             <div style={{ padding: '16px 0 12px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{
-                width: 168, height: 208, background: BG3, border: `1px solid ${BORDER}`,
-                position: 'relative', overflow: 'hidden', marginBottom: 8,
-                boxShadow: `0 0 0 3px ${BG2}, 0 0 0 4px ${BORDER}`,
-              }}>
-                <img src="/Official_Lee.jpg" alt="이재명" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
-                <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: `linear-gradient(${BLUE}, ${BLUE2})` }} />
-                <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 3, background: `linear-gradient(${RED}, ${RED2})` }} />
-              </div>
-              <div style={{ fontSize: 13, fontWeight: 800, color: TEXT }}>이재명</div>
-              <div style={{ fontSize: 10, color: TEXT3, marginTop: 2 }}>前 대통령</div>
+              {(() => {
+                const lead   = yRaw - 50                                      // 양수=연임 우세, 음수=탄핵 우세
+                const color  = lead >= 0 ? BLUE : RED
+                const opp    = lead >= 0 ? RED  : BLUE
+                const str    = Math.min(Math.abs(lead) * 3, 40)               // 글로우 강도
+                const border = `3px solid ${color}`
+                const shadow = `0 0 ${8 + str}px ${color}88, 0 0 ${20 + str * 2}px ${color}44, 0 0 0 3px ${BG2}, 0 0 0 4px ${color}44`
+                return (
+                  <div style={{
+                    width: 168, height: 208, background: BG3,
+                    border, position: 'relative', overflow: 'hidden', marginBottom: 10,
+                    boxShadow: shadow,
+                    transition: 'box-shadow 1.5s ease, border-color 1.5s ease',
+                  }}>
+                    <img src="/Official_Lee.jpg" alt="이재명" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
+                    {/* 컬러 오버레이: 우세 진영 색으로 미세하게 물듦 */}
+                    <div style={{
+                      position: 'absolute', inset: 0,
+                      background: `linear-gradient(180deg, ${color}00 40%, ${color}22 100%)`,
+                      transition: 'background 1.5s ease',
+                      pointerEvents: 'none',
+                    }} />
+                    <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg, ${BLUE}, ${BLUE2})` }} />
+                    <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg, ${RED}, ${RED2})` }} />
+                    {/* 우세 진영 코너 각인 */}
+                    <div style={{ position: 'absolute', top: 6, left: 8, fontSize: 9, fontWeight: 900, color: color, letterSpacing: 1, textShadow: `0 0 6px ${color}` }}>
+                      {lead >= 0 ? '연임' : '탄핵'} +{Math.abs(lead).toFixed(1)}%
+                    </div>
+                    {/* 미사용 변수 방지 */}
+                    {opp && null}
+                  </div>
+                )
+              })()}
+              <div style={{ fontSize: 14, fontWeight: 800, color: TEXT, letterSpacing: 1 }}>이재명</div>
+              <div style={{ fontSize: 10, color: TEXT3, marginTop: 2, letterSpacing: 2 }}>前 대통령</div>
             </div>
 
-            {/* 연임 vs 탄핵 바 */}
-            <div style={{ padding: '0 16px 14px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                <div style={{ textAlign: 'left' }}>
-                  <div style={{ fontSize: 20, fontWeight: 800, color: BLUE, lineHeight: 1 }}>{dispY.toFixed(1)}<span style={{ fontSize: 12 }}>%</span></div>
-                  <div style={{ fontSize: 9, color: TEXT3, marginTop: 2 }}>연임</div>
+            {/* 연임 vs 탄핵 줄다리기 게이지 */}
+            <div style={{ padding: '0 14px 14px' }}>
+              {/* 수치 */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8 }}>
+                <div>
+                  <div style={{ fontSize: 26, fontWeight: 900, color: BLUE, lineHeight: 1, textShadow: `0 0 12px ${BLUE}66` }}>
+                    {dispY.toFixed(1)}<span style={{ fontSize: 13, fontWeight: 700 }}>%</span>
+                  </div>
+                  <div style={{ fontSize: 9, color: TEXT3, marginTop: 3, letterSpacing: 2, fontWeight: 700 }}>연임</div>
                 </div>
-                <div style={{ textAlign: 'center', alignSelf: 'center' }}>
-                  <div style={{ fontSize: 9, color: TEXT3, fontWeight: 700, letterSpacing: 2 }}>vs</div>
-                </div>
+                <div style={{ fontSize: 11, color: TEXT3, fontWeight: 900, letterSpacing: 3, alignSelf: 'center' }}>VS</div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 20, fontWeight: 800, color: RED, lineHeight: 1 }}>{dispT.toFixed(1)}<span style={{ fontSize: 12 }}>%</span></div>
-                  <div style={{ fontSize: 9, color: TEXT3, marginTop: 2 }}>탄핵</div>
+                  <div style={{ fontSize: 26, fontWeight: 900, color: RED, lineHeight: 1, textShadow: `0 0 12px ${RED}66` }}>
+                    {dispT.toFixed(1)}<span style={{ fontSize: 13, fontWeight: 700 }}>%</span>
+                  </div>
+                  <div style={{ fontSize: 9, color: TEXT3, marginTop: 3, letterSpacing: 2, fontWeight: 700 }}>탄핵</div>
                 </div>
               </div>
-              <div style={{ height: 6, background: RED2, borderRadius: 3, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${dispY}%`, background: `linear-gradient(90deg, ${BLUE2}, ${BLUE})`, transition: 'width 0.5s ease', borderRadius: 3 }} />
+
+              {/* 게이지 바 */}
+              <div style={{ position: 'relative', height: 28 }}>
+                {/* 배경 트랙 */}
+                <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(90deg, ${BLUE2}22, ${RED2}22)`, border: `1px solid ${BORDER}` }} />
+                {/* 연임 채움 */}
+                <div style={{
+                  position: 'absolute', left: 0, top: 0, bottom: 0,
+                  width: `${dispY}%`,
+                  background: `linear-gradient(90deg, ${BLUE2}, ${BLUE})`,
+                  transition: 'width 0.5s cubic-bezier(0.34,1.56,0.64,1)',
+                  animation: 'gaugePop 0.5s ease',
+                  boxShadow: `4px 0 12px ${BLUE}88`,
+                }} />
+                {/* 탄핵 채움 오버레이 */}
+                <div style={{
+                  position: 'absolute', right: 0, top: 0, bottom: 0,
+                  width: `${dispT}%`,
+                  background: `linear-gradient(270deg, ${RED2}, ${RED})`,
+                  transition: 'width 0.5s cubic-bezier(0.34,1.56,0.64,1)',
+                  boxShadow: `-4px 0 12px ${RED}88`,
+                }} />
+                {/* 눈금선 */}
+                {[25, 50, 75].map(p => (
+                  <div key={p} style={{
+                    position: 'absolute', left: `${p}%`, top: 0, bottom: 0, width: 1,
+                    background: p === 50 ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)',
+                    zIndex: 2,
+                  }} />
+                ))}
+                {/* 중앙 50% 레이블 */}
+                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontSize: 8, color: 'rgba(255,255,255,0.4)', fontWeight: 900, zIndex: 3, letterSpacing: 1 }}>50</div>
+                {/* 현재 위치 마커 (삼각 포인터) */}
+                <div style={{
+                  position: 'absolute', top: -7, left: `${dispY}%`,
+                  transform: 'translateX(-50%)',
+                  width: 0, height: 0, zIndex: 4,
+                  borderLeft: '6px solid transparent',
+                  borderRight: '6px solid transparent',
+                  borderTop: `8px solid ${dispY >= 50 ? BLUE : RED}`,
+                  filter: `drop-shadow(0 0 4px ${dispY >= 50 ? BLUE : RED})`,
+                  transition: 'left 0.5s cubic-bezier(0.34,1.56,0.64,1)',
+                }} />
+                {/* 바 테두리 강조 */}
+                <div style={{ position: 'absolute', inset: 0, border: `2px solid ${BORDER}`, pointerEvents: 'none', zIndex: 5 }} />
+              </div>
+
+              {/* 하단 레이블 */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 5, fontSize: 9, color: TEXT3, fontWeight: 700 }}>
+                <span style={{ color: dispY > 50 ? BLUE : TEXT3 }}>
+                  {dispY > 50 ? '▲ 우세' : '▼ 열세'}
+                </span>
+                <span style={{ letterSpacing: 1 }}>여론 현황</span>
+                <span style={{ color: dispT > 50 ? RED : TEXT3 }}>
+                  {dispT > 50 ? '▲ 우세' : '▼ 열세'}
+                </span>
               </div>
             </div>
 
@@ -326,6 +408,7 @@ export default function Page() {
         {/* ── 우: 탄핵 주장 ── */}
         <SidePanel
           side="tanhek"
+          isWinning={tRaw >= 50}
           color={RED}
           color2={RED2}
           label="탄핵 주장"
@@ -348,10 +431,10 @@ export default function Page() {
 }
 
 // ── 사이드 패널 ───────────────────────────────────────────────────────────────
-function SidePanel({ side, color, color2, label, pct, total, best, allPosts, keywords, history, stance, writeValue, onWriteChange, onSubmit, onScore, onRebuttal }: {
+function SidePanel({ side, color, color2, label, pct, total, best, allPosts, keywords, history, stance, isWinning, writeValue, onWriteChange, onSubmit, onScore, onRebuttal }: {
   side: Side; color: string; color2: string; label: string; pct: number; total: number
   best: Post[]; allPosts: Post[]; keywords: string[]; history: number[]
-  stance: Side | null; writeValue: string; onWriteChange: (v: string) => void
+  stance: Side | null; isWinning: boolean; writeValue: string; onWriteChange: (v: string) => void
   onSubmit: () => void; onScore: (id: number, d: number) => void; onRebuttal: (id: number) => void
 }) {
   const isActive = stance === side
@@ -359,7 +442,15 @@ function SidePanel({ side, color, color2, label, pct, total, best, allPosts, key
   const min = Math.min(...history)
 
   return (
-    <div style={{ flex: '0 0 31%', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: `${side === 'yeonnim' ? 'pulseBlue' : 'pulseRed'} 4s ease-in-out infinite` }}>
+    <div style={{
+      flex: '0 0 31%', display: 'flex', flexDirection: 'column', overflow: 'hidden',
+      borderLeft:  side === 'tanhek'  ? `2px solid ${color}55` : undefined,
+      borderRight: side === 'yeonnim' ? `2px solid ${color}55` : undefined,
+      // 우세: 은은한 글로우 / 열세: 빠르게 경고 깜빡
+      animation: isWinning
+        ? `${side === 'yeonnim' ? 'glowBlueWin' : 'glowRedWin'} 3s ease-in-out infinite`
+        : `${side === 'yeonnim' ? 'warnBlue'    : 'warnRed'}    1.2s ease-in-out infinite`,
+    }}>
 
       {/* 패널 헤더 */}
       <div style={{ background: `linear-gradient(180deg, ${color}18, transparent)`, borderBottom: `1px solid ${color}33`, padding: '10px 14px', flexShrink: 0 }}>
@@ -399,7 +490,7 @@ function SidePanel({ side, color, color2, label, pct, total, best, allPosts, key
 
         {/* 베스트 주장 */}
         <div style={{ padding: '8px 14px 4px', borderBottom: `1px solid ${BORDER}` }}>
-          <div style={{ fontSize: 9, fontWeight: 700, color: TEXT3, letterSpacing: 2, marginBottom: 8 }}>베스트 주장</div>
+          <div style={{ fontSize: 10, fontWeight: 900, color, letterSpacing: 2, marginBottom: 8 }}>⚔ 치명적 논리</div>
           {best.map((p, i) => (
             <BestCard key={p.id} post={p} rank={i + 1} color={color} onScore={onScore} onRebuttal={onRebuttal} />
           ))}
@@ -463,29 +554,43 @@ function BestCard({ post, rank, color, onScore, onRebuttal }: {
   const [scored, setScored] = useState(false)
   const [flash,  setFlash]  = useState(false)
 
+  const isTop = rank === 1
+
   return (
     <div style={{
-      marginBottom: 8, padding: '10px 12px',
-      background: BG3, border: `1px solid ${color}30`,
+      marginBottom: isTop ? 10 : 7,
+      padding: isTop ? '12px 14px' : '9px 11px',
+      background: isTop ? `linear-gradient(135deg, ${color}18, ${BG3})` : BG3,
+      border: `${isTop ? 2 : 1}px solid ${isTop ? color + '66' : color + '28'}`,
       borderRadius: 6, position: 'relative',
-      animation: post.time === '방금 전' ? 'fadeUp 0.4s ease' : 'none',
+      animation: isTop
+        ? `${color === BLUE ? 'crownGlowBlue' : 'crownGlowRed'} 3s ease-in-out infinite`
+        : post.time === '방금 전' ? 'fadeUp 0.4s ease' : 'none',
     }}>
-      <div style={{ position: 'absolute', top: 8, right: 10, fontSize: 11, fontWeight: 800, color: `${color}60` }}>
+      {/* 1위 왕관 뱃지 */}
+      {isTop && (
+        <div style={{
+          position: 'absolute', top: -10, left: 12,
+          fontSize: 18, lineHeight: 1,
+          filter: `drop-shadow(0 0 6px ${color})`,
+        }}>👑</div>
+      )}
+      <div style={{ position: 'absolute', top: isTop ? 9 : 7, right: 10, fontSize: isTop ? 13 : 10, fontWeight: 900, color: `${color}${isTop ? 'cc' : '55'}` }}>
         #{rank}
       </div>
-      <div style={{ fontSize: 10, fontWeight: 700, color, marginBottom: 5 }}>{post.nickname}</div>
-      <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.6, marginBottom: 8, wordBreak: 'keep-all', paddingRight: 20 }}>{post.text}</p>
+      <div style={{ fontSize: isTop ? 11 : 10, fontWeight: 800, color, marginBottom: 5, marginTop: isTop ? 6 : 0 }}>{post.nickname}</div>
+      <p style={{ fontSize: isTop ? 13 : 12, color: isTop ? TEXT : TEXT, lineHeight: 1.65, marginBottom: 8, wordBreak: 'keep-all', paddingRight: 22, fontWeight: isTop ? 600 : 400 }}>{post.text}</p>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <div style={{ fontSize: 9, fontWeight: 700, color, background: `${color}15`, padding: '2px 8px', borderRadius: 3 }}>
+        <div style={{ fontSize: 9, fontWeight: 800, color, background: `${color}20`, padding: '2px 8px', borderRadius: 3, border: `1px solid ${color}33` }}>
           논리력 {post.score.toLocaleString()}pt
         </div>
         <button
           onClick={() => { if (!scored) { setScored(true); setFlash(true); onScore(post.id, 15); setTimeout(() => setFlash(false), 600) } }}
-          style={{ fontSize: 10, color: scored ? color : TEXT3, fontWeight: scored ? 700 : 400, display: 'flex', gap: 3, alignItems: 'center', transition: 'all 0.2s' }}>
-          <span>▲</span> 추천 {scored ? <span style={{ fontSize: 9, color, animation: flash ? 'scoreUp 0.6s ease forwards' : 'none' }}>+15pt</span> : null}
+          style={{ fontSize: 10, color: scored ? color : TEXT3, fontWeight: scored ? 800 : 400, display: 'flex', gap: 3, alignItems: 'center', transition: 'all 0.2s' }}>
+          ▲ 추천 {scored && <span style={{ fontSize: 9, color, animation: flash ? 'scoreUp 0.6s ease forwards' : 'none' }}>+15pt</span>}
         </button>
-        <button onClick={() => onRebuttal(post.id)} style={{ fontSize: 10, color: TEXT3, display: 'flex', gap: 3 }}>
-          <span>⚡</span> 반박 {post.rebuttal}
+        <button onClick={() => onRebuttal(post.id)} style={{ fontSize: 10, color: TEXT3 }}>
+          ⚡ {post.rebuttal}
         </button>
       </div>
     </div>
