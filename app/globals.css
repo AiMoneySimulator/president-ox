@@ -1,72 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --blue:  #1e6fff;
-  --red:   #ff2222;
-  --black: #000000;
-  --dark:  #080808;
-  --d1:    #111111;
-  --d2:    #1a1a1a;
-  --d3:    #2a2a2a;
-  --g3:    #555555;
-  --g4:    #888888;
-  --g5:    #bbbbbb;
-  --white: #ffffff;
-  --font:  'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --blue:   #3b82f6;
+  --blue2:  #1d4ed8;
+  --red:    #ef4444;
+  --red2:   #b91c1c;
+  --bg:     #0d1117;
+  --bg2:    #161b22;
+  --bg3:    #1c2128;
+  --border: #30363d;
+  --border2:#21262d;
+  --text:   #e6edf3;
+  --text2:  #8b949e;
+  --text3:  #484f58;
+  --font:   'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
 }
 
-html { font-size: 15px; }
+html { font-size: 14px; }
 body {
-  background: var(--black);
-  color: var(--white);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 button  { font-family: inherit; cursor: pointer; border: none; background: none; }
 textarea { font-family: inherit; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-/* ── 애니메이션 ── */
-@keyframes marchRight {
-  0%   { transform: translateX(-80px) scale(0.6); opacity: 0; }
-  20%  { opacity: 1; }
-  80%  { opacity: 1; }
-  100% { transform: translateX(90px)  scale(0.9); opacity: 0; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes marchLeft {
-  0%   { transform: translateX(80px)  scale(0.6); opacity: 0; }
-  20%  { opacity: 1; }
-  80%  { opacity: 1; }
-  100% { transform: translateX(-90px) scale(0.9); opacity: 0; }
+@keyframes pulseBlue {
+  0%,100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+  50%     { box-shadow: 0 0 12px 2px rgba(59,130,246,0.25); }
 }
-@keyframes sysFlicker {
-  0%,100% { opacity: 1; }
-  50%     { opacity: 0.65; }
+@keyframes pulseRed {
+  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+  50%     { box-shadow: 0 0 12px 2px rgba(239,68,68,0.25); }
 }
-@keyframes hpShake {
-  0%,100% { transform: translateX(0); }
-  25%     { transform: translateX(-3px); }
-  75%     { transform: translateX(3px); }
-}
-@keyframes neonBlue {
-  0%,100% { box-shadow: 0 0 6px #1e6fff66, inset 0 0 6px #1e6fff11; }
-  50%     { box-shadow: 0 0 16px #1e6fffaa, inset 0 0 12px #1e6fff22; }
-}
-@keyframes neonRed {
-  0%,100% { box-shadow: 0 0 6px #ff222266, inset 0 0 6px #ff222211; }
-  50%     { box-shadow: 0 0 16px #ff2222aa, inset 0 0 12px #ff222222; }
-}
-@keyframes slideUp {
-  from { transform: translateY(8px); opacity: 0; }
-  to   { transform: translateY(0);   opacity: 1; }
+@keyframes scoreUp {
+  0%   { transform: translateY(0);   opacity: 1; }
+  100% { transform: translateY(-14px); opacity: 0; }
 }
 @keyframes tickerScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-@keyframes castleHit {
-  0%,100% { filter: brightness(1); }
-  50%     { filter: brightness(2); }
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.5; }
 }
