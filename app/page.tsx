@@ -208,7 +208,7 @@ export default function Page() {
                 position: 'relative', overflow: 'hidden', marginBottom: 8,
                 boxShadow: `0 0 0 3px ${BG2}, 0 0 0 4px ${BORDER}`,
               }}>
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: TEXT3 }}>사진</div>
+                <img src="/Official_Lee.jpg" alt="이재명" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
                 <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: `linear-gradient(${BLUE}, ${BLUE2})` }} />
                 <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 3, background: `linear-gradient(${RED}, ${RED2})` }} />
               </div>
