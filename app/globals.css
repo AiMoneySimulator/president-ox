@@ -1,21 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --blue:  #1e6fff;
-  --red:   #ff1e1e;
+  --red:   #ff2222;
   --black: #000000;
-  --dark:  #0a0a0a;
-  --gray1: #1a1a1a;
-  --gray2: #2a2a2a;
-  --gray3: #666;
-  --gray4: #aaa;
+  --dark:  #080808;
+  --d1:    #111111;
+  --d2:    #1a1a1a;
+  --d3:    #2a2a2a;
+  --g3:    #555555;
+  --g4:    #888888;
+  --g5:    #bbbbbb;
   --white: #ffffff;
-  --font:  'Black Han Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', Impact, sans-serif;
+  --font:  'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 }
 
-html { font-size: 16px; }
+html { font-size: 15px; }
 body {
   background: var(--black);
   color: var(--white);
@@ -23,57 +25,48 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
-textarea, input { font-family: inherit; }
-a { color: inherit; text-decoration: none; }
+button  { font-family: inherit; cursor: pointer; border: none; background: none; }
+textarea { font-family: inherit; }
 
-/* ── 전쟁 애니메이션 ── */
-@keyframes shake {
-  0%,100% { transform: translateX(0) }
-  10%,30%,50%,70%,90% { transform: translateX(-3px) }
-  20%,40%,60%,80% { transform: translateX(3px) }
+/* ── 애니메이션 ── */
+@keyframes marchRight {
+  0%   { transform: translateX(-80px) scale(0.6); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(90px)  scale(0.9); opacity: 0; }
+}
+@keyframes marchLeft {
+  0%   { transform: translateX(80px)  scale(0.6); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(-90px) scale(0.9); opacity: 0; }
+}
+@keyframes sysFlicker {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.65; }
+}
+@keyframes hpShake {
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(-3px); }
+  75%     { transform: translateX(3px); }
 }
 @keyframes neonBlue {
-  0%,100% { box-shadow: 0 0 8px #1e6fff, 0 0 20px #1e6fff, 0 0 40px #1e6fff44, inset 0 0 8px #1e6fff22; }
-  50%      { box-shadow: 0 0 16px #1e6fff, 0 0 40px #1e6fff, 0 0 80px #1e6fff66, inset 0 0 16px #1e6fff44; }
+  0%,100% { box-shadow: 0 0 6px #1e6fff66, inset 0 0 6px #1e6fff11; }
+  50%     { box-shadow: 0 0 16px #1e6fffaa, inset 0 0 12px #1e6fff22; }
 }
 @keyframes neonRed {
-  0%,100% { box-shadow: 0 0 8px #ff1e1e, 0 0 20px #ff1e1e, 0 0 40px #ff1e1e44, inset 0 0 8px #ff1e1e22; }
-  50%      { box-shadow: 0 0 16px #ff1e1e, 0 0 40px #ff1e1e, 0 0 80px #ff1e1e66, inset 0 0 16px #ff1e1e44; }
+  0%,100% { box-shadow: 0 0 6px #ff222266, inset 0 0 6px #ff222211; }
+  50%     { box-shadow: 0 0 16px #ff2222aa, inset 0 0 12px #ff222222; }
 }
-@keyframes glowPhoto {
-  0%,100% { box-shadow: -8px 0 30px #1e6fff88, 8px 0 30px #ff1e1e88; }
-  50%      { box-shadow: -16px 0 60px #1e6fffcc, 16px 0 60px #ff1e1ecc; }
-}
-@keyframes warningBlink {
-  0%,100% { border-color: #ff1e1e; }
-  50%      { border-color: #ff000088; }
-}
-@keyframes scanline {
-  0%   { top: -10% }
-  100% { top: 110% }
-}
-@keyframes spark {
-  0%   { transform: scale(1) translateX(0); opacity: 1; }
-  100% { transform: scale(0) translateX(var(--dx)); opacity: 0; }
-}
-@keyframes slideInLeft {
-  from { transform: translateX(-20px); opacity: 0; }
-  to   { transform: translateX(0);     opacity: 1; }
-}
-@keyframes slideInRight {
-  from { transform: translateX(20px);  opacity: 0; }
-  to   { transform: translateX(0);     opacity: 1; }
-}
-@keyframes flashBlue {
-  0%,100% { background: transparent; }
-  50%      { background: rgba(30,111,255,0.15); }
-}
-@keyframes flashRed {
-  0%,100% { background: transparent; }
-  50%      { background: rgba(255,30,30,0.15); }
+@keyframes slideUp {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
 }
 @keyframes tickerScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+@keyframes castleHit {
+  0%,100% { filter: brightness(1); }
+  50%     { filter: brightness(2); }
 }
