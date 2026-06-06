@@ -52,22 +52,22 @@ textarea { font-family: inherit; }
 
 /* ── 진영 우세 글로우 (은은) ── */
 @keyframes glowBlueWin {
-  0%,100% { box-shadow: 0 0 12px #3b82f655, inset 0 0 20px #3b82f610; border-color: #3b82f655; }
-  50%     { box-shadow: 0 0 28px #3b82f699, inset 0 0 40px #3b82f620; border-color: #3b82f688; }
+  0%,100% { box-shadow: 0 0 12px #3b82f655, inset 0 0 20px #3b82f610; }
+  50%     { box-shadow: 0 0 28px #3b82f699, inset 0 0 40px #3b82f620; }
 }
 @keyframes glowRedWin {
-  0%,100% { box-shadow: 0 0 12px #ef444455, inset 0 0 20px #ef444410; border-color: #ef444455; }
-  50%     { box-shadow: 0 0 28px #ef444499, inset 0 0 40px #ef444420; border-color: #ef444488; }
+  0%,100% { box-shadow: 0 0 12px #ef444455, inset 0 0 20px #ef444410; }
+  50%     { box-shadow: 0 0 28px #ef444499, inset 0 0 40px #ef444420; }
 }
 
 /* ── 진영 열세 경고 글로우 (급박, 빠르게) ── */
 @keyframes warnBlue {
-  0%,100% { box-shadow: 0 0 6px #3b82f633; border-color: #3b82f633; }
-  50%     { box-shadow: 0 0 40px #3b82f6cc, inset 0 0 30px #3b82f622; border-color: #3b82f6aa; }
+  0%,100% { box-shadow: 0 0 6px #3b82f633; }
+  50%     { box-shadow: 0 0 40px #3b82f6cc, inset 0 0 30px #3b82f622; }
 }
 @keyframes warnRed {
-  0%,100% { box-shadow: 0 0 6px #ef444433; border-color: #ef444433; }
-  50%     { box-shadow: 0 0 40px #ef4444cc, inset 0 0 30px #ef444422; border-color: #ef4444aa; }
+  0%,100% { box-shadow: 0 0 6px #ef444433; }
+  50%     { box-shadow: 0 0 40px #ef4444cc, inset 0 0 30px #ef444422; }
 }
 
 /* ── 1위 카드 빛나기 ── */
