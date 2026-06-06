@@ -32,7 +32,34 @@ const INIT: Post[] = [
   { id: 3, side: 'yeonnim', nickname: '광주시민k',   score: 187, rebuttal: 43,  time: '9분 전',  text: '검찰 독재에 맞서 싸운 사람이 이재명입니다. 지금 포기하면 안 됩니다.' },
   { id: 7, side: 'tanhek',  nickname: '법치주의자',  score: 276, rebuttal: 60,  time: '8분 전',  text: '법 앞에 예외는 없습니다. 대통령이라고 예외가 될 수 없습니다.' },
   { id: 4, side: 'yeonnim', nickname: '청년민주',    score: 144, rebuttal: 39,  time: '14분 전', text: '민주당 지지율을 보세요. 민심은 이미 연임을 선택하고 있습니다.' },
-  { id: 8, side: 'tanhek',  nickname: '국민의힘팬',  score: 201, rebuttal: 48,  time: '12분 전', text: '이런 상황에서 연임을 주장한다는 건 대한민국의 국격을 스스로 낮추는 것입니다.' },
+  { id: 8,  side: 'tanhek',  nickname: '국민의힘팬',  score: 201, rebuttal: 48,  time: '12분 전', text: '이런 상황에서 연임을 주장한다는 건 대한민국의 국격을 스스로 낮추는 것입니다.' },
+  // 대장동
+  { id: 9,  side: 'yeonnim', nickname: '광주청년',   score: 203, rebuttal: 67,  time: '7분 전',  text: '대장동은 공공개발이 민간보다 효율적임을 증명한 성공 사례입니다. 왜곡하지 마세요.' },
+  { id: 10, side: 'tanhek',  nickname: '진실탐구',   score: 334, rebuttal: 45,  time: '6분 전',  text: '대장동 비리로 유죄 판결이 났습니다. 이게 연임을 지지할 수 없는 이유입니다.' },
+  { id: 15, side: 'yeonnim', nickname: '민주개혁',   score: 167, rebuttal: 38,  time: '20분 전', text: '대장동 수익의 대부분은 성남시로 귀속됐습니다. 시민을 위한 개발이었습니다.' },
+  { id: 16, side: 'tanhek',  nickname: '법과원칙',   score: 298, rebuttal: 55,  time: '19분 전', text: '대장동 50억 클럽, 이게 공공개발입니까? 사익 편취가 핵심입니다.' },
+  // 앱스타인
+  { id: 11, side: 'yeonnim', nickname: '좌파논객',   score: 156, rebuttal: 89,  time: '11분 전', text: '앱스타인 의혹은 검찰이 만들어낸 허위 조작 공작입니다. 증거가 없습니다.' },
+  { id: 12, side: 'tanhek',  nickname: '보수논평가', score: 289, rebuttal: 52,  time: '10분 전', text: '앱스타인 의혹만으로도 지도자의 도덕성에 심각한 문제가 있습니다.' },
+  { id: 17, side: 'yeonnim', nickname: '진보논단',   score: 134, rebuttal: 71,  time: '22분 전', text: '앱스타인 연루설은 정치공작입니다. 탄핵을 위한 허위 정보 유포입니다.' },
+  // 경제정책
+  { id: 13, side: 'yeonnim', nickname: '경제학도',   score: 178, rebuttal: 43,  time: '18분 전', text: '경제정책의 일관성이 중요합니다. 연임으로 서민 중심 경제를 완성해야 합니다.' },
+  { id: 14, side: 'tanhek',  nickname: '자유시장론', score: 245, rebuttal: 61,  time: '16분 전', text: '현 경제정책은 포퓰리즘입니다. 재정 건전성이 무너지고 있어 탄핵이 해법입니다.' },
+  { id: 18, side: 'tanhek',  nickname: '재정건전파', score: 188, rebuttal: 34,  time: '25분 전', text: '경제정책 실패로 물가는 치솟고 성장률은 추락했습니다. 책임을 물어야 합니다.' },
+]
+
+// ── Hot Issue 데이터 ─────────────────────────────────────────────────────────
+type Issue = { id: string; label: string; emoji: string; yArg: string; tArg: string }
+const ISSUES: Issue[] = [
+  { id: '대장동', label: '대장동', emoji: '🔥',
+    yArg: '대장동은 공공개발 성공 사례이자 적폐청산의 일환이다. 민간 개발보다 훨씬 효율적이었다.',
+    tArg: '대장동은 권력형 부정부패의 정점이다. 유죄 판결이 모든 걸 증명한다.' },
+  { id: '앱스타인', label: '앱스타인', emoji: '💥',
+    yArg: '앱스타인 연루설은 검찰이 만들어낸 정치공작이다. 근거 없는 마녀사냥에 불과하다.',
+    tArg: '도덕적 의혹이 해소되지 않은 인물을 국가 수반으로 인정할 수 없다. 국격의 문제다.' },
+  { id: '경제정책', label: '경제정책', emoji: '📊',
+    yArg: '서민 중심 경제정책을 완성하려면 연임이 필수다. 정책 연속성이 경제 회복의 핵심이다.',
+    tArg: '현 경제정책은 재정을 파탄낸 포퓰리즘이다. 탄핵이 경제 정상화의 첫걸음이다.' },
 ]
 
 const KEYWORDS: Record<Side, string[]> = {
@@ -71,6 +98,7 @@ export default function Page() {
   const [posts,      setPosts]      = useState<Post[]>(INIT)
   const [sysIdx,     setSysIdx]     = useState(0)
   const [yHistory,   setYHistory]   = useState(Y_HISTORY)
+  const [hotIssue,   setHotIssue]   = useState<Issue | null>(null)
   const nextId = useRef(100)
 
   useEffect(() => {
@@ -130,6 +158,14 @@ export default function Page() {
   const tTotal = tPosts.reduce((s, p) => s + p.score, 0)
 
   const tHistory = yHistory.map(v => +(100 - v).toFixed(2))
+
+  // 이슈 필터링
+  const filteredFeed = hotIssue
+    ? posts.filter(p => p.text.includes(hotIssue.id))
+    : posts
+  const issuePct = hotIssue
+    ? +(posts.filter(p => p.text.includes(hotIssue.id)).length / Math.max(posts.length, 1) * 100).toFixed(0)
+    : 0
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: BG, fontFamily: FONT, color: TEXT, overflow: 'hidden' }}>
@@ -244,6 +280,15 @@ export default function Page() {
               </span>
             </div>
 
+            {/* Hot Issue Battle */}
+            <HotIssueBattle
+              issues={ISSUES}
+              selected={hotIssue}
+              onSelect={issue => setHotIssue(prev => prev?.id === issue.id ? null : issue)}
+              issuePct={issuePct}
+              posts={posts}
+            />
+
             {/* 스탠스 선택 */}
             {stance === null && (
               <div style={{ padding: '0 16px 14px', display: 'flex', gap: 8 }}>
@@ -264,10 +309,12 @@ export default function Page() {
           {/* 실시간 토론 피드 */}
           <div style={{ flex: 1, overflowY: 'auto' }}>
             <div style={{ padding: '8px 12px 4px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${BORDER}` }}>
-              <span style={{ fontSize: 10, fontWeight: 700, color: TEXT3, letterSpacing: 2 }}>실시간 토론</span>
-              <span style={{ fontSize: 9, color: TEXT3 }}>{posts.length}개 주장</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: TEXT3, letterSpacing: 2 }}>
+                {hotIssue ? `🔍 "${hotIssue.id}" 관련 토론` : '실시간 토론'}
+              </span>
+              <span style={{ fontSize: 9, color: TEXT3 }}>{filteredFeed.length}개 주장</span>
             </div>
-            {posts.slice(0, 20).map(p => (
+            {filteredFeed.slice(0, 20).map(p => (
               <FeedPost key={p.id} post={p} onScore={addScore} onRebuttal={addRebuttal} />
             ))}
           </div>
@@ -477,6 +524,82 @@ function PostCard({ post, color, onScore, onRebuttal }: {
 }
 
 // ── 피드 포스트 (중앙) ────────────────────────────────────────────────────────
+// ── Hot Issue Battle ─────────────────────────────────────────────────────────
+function HotIssueBattle({ issues, selected, onSelect, issuePct, posts }: {
+  issues: Issue[]
+  selected: Issue | null
+  onSelect: (i: Issue) => void
+  issuePct: number
+  posts: Post[]
+}) {
+  return (
+    <div style={{ margin: '0 16px 12px', border: `1px solid ${BORDER}`, borderRadius: 6, overflow: 'hidden' }}>
+      {/* 헤더 */}
+      <div style={{ background: BG3, padding: '7px 12px', display: 'flex', alignItems: 'center', gap: 6, borderBottom: `1px solid ${BORDER}` }}>
+        <span style={{ fontSize: 10, fontWeight: 800, color: '#f97316', letterSpacing: 1 }}>🔥 HOT ISSUE</span>
+        <span style={{ fontSize: 9, color: TEXT3 }}>이슈를 클릭하면 관련 주장만 정렬됩니다</span>
+      </div>
+
+      {/* 이슈 키워드 버튼 */}
+      <div style={{ display: 'flex', padding: '8px 10px', gap: 6, background: BG2 }}>
+        {issues.map(issue => {
+          const cnt = posts.filter(p => p.text.includes(issue.id)).length
+          const isActive = selected?.id === issue.id
+          return (
+            <button
+              key={issue.id}
+              onClick={() => onSelect(issue)}
+              style={{
+                flex: 1, padding: '7px 4px', borderRadius: 5, fontSize: 11, fontWeight: 700,
+                background: isActive ? '#f97316' : BG3,
+                color: isActive ? '#fff' : TEXT2,
+                border: `1px solid ${isActive ? '#f97316' : BORDER}`,
+                transition: 'all 0.2s',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
+              }}>
+              <span>{issue.emoji} {issue.label}</span>
+              <span style={{ fontSize: 9, fontWeight: 400, color: isActive ? 'rgba(255,255,255,0.75)' : TEXT3 }}>{cnt}개 주장</span>
+            </button>
+          )
+        })}
+      </div>
+
+      {/* 선택된 이슈 상세 */}
+      {selected && (
+        <div style={{ background: BG, animation: 'fadeUp 0.3s ease' }}>
+          {/* 영향력 게이지 */}
+          <div style={{ padding: '8px 12px 6px', borderBottom: `1px solid ${BORDER}` }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
+              <span style={{ fontSize: 9, fontWeight: 700, color: '#f97316', letterSpacing: 1 }}>이슈 영향력</span>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#f97316' }}>{issuePct}%</span>
+            </div>
+            <div style={{ height: 4, background: BORDER, borderRadius: 2, overflow: 'hidden' }}>
+              <div style={{
+                height: '100%', width: `${issuePct}%`,
+                background: 'linear-gradient(90deg, #ea580c, #f97316)',
+                borderRadius: 2, transition: 'width 0.6s ease',
+              }} />
+            </div>
+            <div style={{ fontSize: 9, color: TEXT3, marginTop: 3 }}>전체 토론 중 {selected.label} 주장 점유율</div>
+          </div>
+
+          {/* 양측 주장 요약 카드 */}
+          <div style={{ display: 'flex' }}>
+            <div style={{ flex: 1, padding: '10px 12px', borderRight: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}` }}>
+              <div style={{ fontSize: 9, fontWeight: 800, color: BLUE, letterSpacing: 1, marginBottom: 5 }}>🔵 연임측 주장</div>
+              <p style={{ fontSize: 11, color: TEXT, lineHeight: 1.6, wordBreak: 'keep-all' }}>{selected.yArg}</p>
+            </div>
+            <div style={{ flex: 1, padding: '10px 12px', borderBottom: `1px solid ${BORDER}` }}>
+              <div style={{ fontSize: 9, fontWeight: 800, color: RED, letterSpacing: 1, marginBottom: 5 }}>🔴 탄핵측 주장</div>
+              <p style={{ fontSize: 11, color: TEXT, lineHeight: 1.6, wordBreak: 'keep-all' }}>{selected.tArg}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function FeedPost({ post, onScore, onRebuttal }: {
   post: Post
   onScore: (id: number, d: number) => void
